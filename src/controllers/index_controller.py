@@ -5,8 +5,6 @@ from fastapi.openapi.utils import get_openapi
 from fastapi.templating import Jinja2Templates
 from starlette.middleware.cors import CORSMiddleware  # CORSを回避するために必要
 
-import db_connection
-
 from models.user import UserTable, User  # 今回使うモデルをインポート
 from models.test_table import TestTable, Test  # 今回使うモデルをインポート
 

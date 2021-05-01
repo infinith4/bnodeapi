@@ -2,6 +2,8 @@ from openapi_server.models.request_add_address_model import RequestAddAddressMod
 from openapi_server.models.request_download_from_cloud_model import RequestDownloadFromCloudModel  # noqa: E501
 from openapi_server.models.request_mnemonic_model import RequestMnemonicModel  # noqa: E501
 from openapi_server.models.request_upload_text_model import RequestUploadTextModel  # noqa: E501
+from openapi_server.models.request_login_user_model import RequestLoginUserModel  # noqa: E501
+
 from openapi_server.models.response_add_address_model import ResponseAddAddressModel  # noqa: E501
 from openapi_server.models.response_gen_key_model import ResponseGenKeyModel  # noqa: E501
 from openapi_server.models.response_get_balance_model import ResponseGetBalanceModel  # noqa: E501
@@ -101,12 +103,12 @@ def api_get_balance(addr):  # noqa: E501
     "/api/login",
     tags=["api"],
     response_class=JSONResponse)
-def api_login(body):  # noqa: E501
+def api_login(loginUser: RequestLoginUserModel, request: Request):  # noqa: E501
     """search data for added address on bitcoin sv
 
     login # noqa: E501
 
-    :param body: request /api/add-address
+    :param body: request /api/login
     :type body: dict | bytes
 
     :rtype: ResponseAddAddressModel

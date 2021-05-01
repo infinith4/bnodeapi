@@ -8,5 +8,5 @@ from controllers.api_controller import *
 app.add_api_route('/', index)
 app.add_api_route('/admin', admin)  # management view for administrator
 app.add_api_route('/users', users)  # management view for administrator
-app.add_api_route('/api/add-address', api_addaddress)  # management view for administrator
-app.add_api_route('/api/download', api_download)  # management view for administrator
+# app.add_api_route('/api/add-address', api_addaddress)  # management view for administrator
+# app.add_api_route('/api/download', api_download)  # management view for administrator

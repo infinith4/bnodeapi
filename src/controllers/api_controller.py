@@ -17,7 +17,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
 @app.post(
-    "/add-address",
+    "/api/add-address",
     tags=["api"],
     response_class=JSONResponse)
 async def api_addaddress(request: Request):  # noqa: E501
@@ -35,7 +35,7 @@ async def api_addaddress(request: Request):  # noqa: E501
     return 'do some magic!'
 
 @app.get(
-    "/add-download",
+    "/api/download",
     tags=["api"],
     response_class=JSONResponse)
 def api_download(txid):  # noqa: E501
@@ -51,21 +51,24 @@ def api_download(txid):  # noqa: E501
     return 'do some magic!'
 
 
-def api_download_from_cloud(body=None):  # noqa: E501
-    """get data for transaction id on Bitcoin SV.
+# def api_download_from_cloud(body=None):  # noqa: E501
+#     """get data for transaction id on Bitcoin SV.
 
-    download from cloud # noqa: E501
+#     download from cloud # noqa: E501
 
-    :param body: 
-    :type body: dict | bytes
+#     :param body: 
+#     :type body: dict | bytes
 
-    :rtype: file
-    """
-    if connexion.request.is_json:
-        body = RequestDownloadFromCloudModel.from_dict(connexion.request.get_json())  # noqa: E501
-    return 'do some magic!'
+#     :rtype: file
+#     """
+#     # if connexion.request.is_json:
+#     #     body = RequestDownloadFromCloudModel.from_dict(connexion.request.get_json())  # noqa: E501
+#     return 'do some magic!'
 
-
+@app.get(
+    "/api/genkey",
+    tags=["api"],
+    response_class=JSONResponse)
 def api_genkey(typeid):  # noqa: E501
     """Generate Ecies Public Key and Secret Key.
 
@@ -78,7 +81,10 @@ def api_genkey(typeid):  # noqa: E501
     """
     return 'do some magic!'
 
-
+@app.get(
+    "/api/get-balance",
+    tags=["api"],
+    response_class=JSONResponse)
 def api_get_balance(addr):  # noqa: E501
     """get balance from address using woc.
 
@@ -91,7 +97,10 @@ def api_get_balance(addr):  # noqa: E501
     """
     return 'do some magic!'
 
-
+@app.post(
+    "/api/login",
+    tags=["api"],
+    response_class=JSONResponse)
 def api_login(body):  # noqa: E501
     """search data for added address on bitcoin sv
 
@@ -102,11 +111,14 @@ def api_login(body):  # noqa: E501
 
     :rtype: ResponseAddAddressModel
     """
-    if connexion.request.is_json:
-        body = RequestAddAddressModel.from_dict(connexion.request.get_json())  # noqa: E501
+    # if connexion.request.is_json:
+    #     body = RequestAddAddressModel.from_dict(connexion.request.get_json())  # noqa: E501
     return 'do some magic!'
 
-
+@app.get(
+    "/api/mnemonic",
+    tags=["api"],
+    response_class=JSONResponse)
 def api_mnemonic(body):  # noqa: E501
     """convert mnemonic words to wif, asset on Bitcoin SV.
 
@@ -117,11 +129,14 @@ def api_mnemonic(body):  # noqa: E501
 
     :rtype: ResponseMnemonicModel
     """
-    if connexion.request.is_json:
-        body = RequestMnemonicModel.from_dict(connexion.request.get_json())  # noqa: E501
+    # if connexion.request.is_json:
+    #     body = RequestMnemonicModel.from_dict(connexion.request.get_json())  # noqa: E501
     return 'do some magic!'
 
-
+@app.get(
+    "/api/tx",
+    tags=["api"],
+    response_class=JSONResponse)
 def api_tx(addr, start_index=None, count=None):  # noqa: E501
     """get transactions.
 
@@ -138,7 +153,10 @@ def api_tx(addr, start_index=None, count=None):  # noqa: E501
     """
     return 'do some magic!'
 
-
+@app.post(
+    "/api/upload",
+    tags=["api"],
+    response_class=JSONResponse)
 def api_upload(body):  # noqa: E501
     """upload file on Bitcoin SV. (100kb)
 
@@ -149,11 +167,14 @@ def api_upload(body):  # noqa: E501
 
     :rtype: ResponseUploadModel
     """
-    if connexion.request.is_json:
-        body = InlineObject.from_dict(connexion.request.get_json())  # noqa: E501
+    # if connexion.request.is_json:
+    #     body = InlineObject.from_dict(connexion.request.get_json())  # noqa: E501
     return 'do some magic!'
 
-
+@app.post(
+    "/api/upload_text",
+    tags=["api"],
+    response_class=JSONResponse)
 def api_upload_text(body):  # noqa: E501
     """upload text data on Bitcoin SV.
 
@@ -164,21 +185,21 @@ def api_upload_text(body):  # noqa: E501
 
     :rtype: ResponseUploadTextModel
     """
-    if connexion.request.is_json:
-        body = RequestUploadTextModel.from_dict(connexion.request.get_json())  # noqa: E501
+    # if connexion.request.is_json:
+    #     body = RequestUploadTextModel.from_dict(connexion.request.get_json())  # noqa: E501
     return 'do some magic!'
 
 
-def api_upload_to_cloud(body):  # noqa: E501
-    """upload file on Cloud Storage.
+# def api_upload_to_cloud(body):  # noqa: E501
+#     """upload file on Cloud Storage.
 
-    convert mnemonic words to wif, asset on Bitcoin SV. # noqa: E501
+#     convert mnemonic words to wif, asset on Bitcoin SV. # noqa: E501
 
-    :param body: 
-    :type body: dict | bytes
+#     :param body: 
+#     :type body: dict | bytes
 
-    :rtype: ResponseUploadToCloudModel
-    """
-    if connexion.request.is_json:
-        body = InlineObjectcloud.from_dict(connexion.request.get_json())  # noqa: E501
-    return 'do some magic!'
+#     :rtype: ResponseUploadToCloudModel
+#     """
+#     # if connexion.request.is_json:
+#     #     body = InlineObjectcloud.from_dict(connexion.request.get_json())  # noqa: E501
+#     return 'do some magic!'

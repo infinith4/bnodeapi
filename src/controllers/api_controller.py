@@ -1,8 +1,9 @@
 from openapi_server.models.request_add_address_model import RequestAddAddressModel  # noqa: E501
 from openapi_server.models.request_download_from_cloud_model import RequestDownloadFromCloudModel  # noqa: E501
 from openapi_server.models.request_mnemonic_model import RequestMnemonicModel  # noqa: E501
+from openapi_server.models.request_upload_model import RequestUploadModel  # noqa: E501
 from openapi_server.models.request_upload_text_model import RequestUploadTextModel  # noqa: E501
-from openapi_server.models.request_login_user_model import RequestLoginUserModel  # noqa: E501
+from openapi_server.models.request_login_model import RequestLoginModel  # noqa: E501
 
 from openapi_server.models.response_add_address_model import ResponseAddAddressModel  # noqa: E501
 from openapi_server.models.response_gen_key_model import ResponseGenKeyModel  # noqa: E501
@@ -12,10 +13,11 @@ from openapi_server.models.response_tx_model import ResponseTxModel  # noqa: E50
 from openapi_server.models.response_upload_model import ResponseUploadModel  # noqa: E501
 from openapi_server.models.response_upload_text_model import ResponseUploadTextModel  # noqa: E501
 from openapi_server.models.response_upload_to_cloud_model import ResponseUploadToCloudModel  # noqa: E501
+from openapi_server.models.response_login_model import ResponseLoginModel  # noqa: E501
 from openapi_server import util
 
 from controllers._base_controller import app, templates
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Form
 from fastapi.responses import JSONResponse
 
 @app.post(
@@ -102,8 +104,9 @@ def api_get_balance(addr):  # noqa: E501
 @app.post(
     "/api/login",
     tags=["api"],
-    response_class=JSONResponse)
-def api_login(loginUser: RequestLoginUserModel, request: Request):  # noqa: E501
+    response_class=JSONResponse,
+    response_model=ResponseLoginModel)
+def api_login(loginUser: RequestLoginModel, request: Request):  # noqa: E501
     """search data for added address on bitcoin sv
 
     login # noqa: E501
@@ -115,7 +118,7 @@ def api_login(loginUser: RequestLoginUserModel, request: Request):  # noqa: E501
     """
     # if connexion.request.is_json:
     #     body = RequestAddAddressModel.from_dict(connexion.request.get_json())  # noqa: E501
-    return 'do some magic!'
+    return ResponseLoginModel(200)
 
 @app.get(
     "/api/mnemonic",
@@ -158,8 +161,9 @@ def api_tx(addr, start_index=None, count=None):  # noqa: E501
 @app.post(
     "/api/upload",
     tags=["api"],
-    response_class=JSONResponse)
-def api_upload(body):  # noqa: E501
+    response_class=JSONResponse,
+    response_model=ResponseUploadModel)
+def api_upload(upload_file: bytes = Form(...)):  # noqa: E501
     """upload file on Bitcoin SV. (100kb)
 
     convert mnemonic words to wif, asset on Bitcoin SV. # noqa: E501

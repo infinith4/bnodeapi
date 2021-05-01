@@ -17,8 +17,10 @@ from openapi_server.models.response_login_model import ResponseLoginModel  # noq
 from openapi_server import util
 
 from controllers._base_controller import app, templates
-from fastapi import FastAPI, Request, Form
+from fastapi import FastAPI, Request, Form, UploadFile, File
 from fastapi.responses import JSONResponse
+
+from utils.upload_util.bsv_upload_util import BsvUploadUtil
 
 @app.post(
     "/api/add-address",
@@ -106,7 +108,7 @@ def api_get_balance(addr):  # noqa: E501
     tags=["api"],
     response_class=JSONResponse,
     response_model=ResponseLoginModel)
-def api_login(loginUser: RequestLoginModel, request: Request):  # noqa: E501
+def api_login(loginUser: RequestLoginModel):  # noqa: E501
     """search data for added address on bitcoin sv
 
     login # noqa: E501
@@ -158,12 +160,27 @@ def api_tx(addr, start_index=None, count=None):  # noqa: E501
     """
     return 'do some magic!'
 
-@app.post(
-    "/api/upload",
+@app.post("/files/")
+async def create_file(file: bytes = File(...)):
+    return {"file_size": len(file)}
+
+#curl -X POST "http://localhost:8000/uploadfile" -H  "accept: application/json" -H  "Content-Type: multipart/form-data" -F "file=@IMG_6855.jpeg;type=image/jpeg"
+
+@app.post("/api/uploadfile",
     tags=["api"],
-    response_class=JSONResponse,
-    response_model=ResponseUploadModel)
-def api_upload(upload_file: bytes = Form(...)):  # noqa: E501
+    response_class=JSONResponse)
+async def create_upload_file(upload_file: UploadFile = File(...)):
+    private_key_wif = ""
+    uploader = BsvUploadUtil(private_key_wif)
+    contents = await upload_file.read()
+    uploader.upload("", media_type="image/jpeg", encoding="binary", file_name=upload_file.filename)
+    return {"file": upload_file}
+
+@app.post(
+    "/upload")
+async def api_upload(upload_file: UploadFile = Form(...)):  # noqa: E501
+
+    #print(request.body)
     """upload file on Bitcoin SV. (100kb)
 
     convert mnemonic words to wif, asset on Bitcoin SV. # noqa: E501
@@ -175,7 +192,11 @@ def api_upload(upload_file: bytes = Form(...)):  # noqa: E501
     """
     # if connexion.request.is_json:
     #     body = InlineObject.from_dict(connexion.request.get_json())  # noqa: E501
-    return 'do some magic!'
+    #curl -X POST "http://localhost:8000/api/upload" -H  "accept: application/json" -H  "Content-Type: multipart/form-data" -F "file=@test_image/IMG_6855.jpeg;type=image/jpeg"
+    # private_key_wif = "cTqvJoYPXAKUuNWre4B53LDSUQNRq8P6vcRHtrTEnrSSNhUynysF"
+    # uploader = BsvUploadUtil(private_key_wif)
+    # uploader.upload(upload_file)
+    return {"file": upload_file}
 
 @app.post(
     "/api/upload_text",

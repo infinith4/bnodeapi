@@ -20,6 +20,7 @@ mysql-connector-python = "*"
 firebase-admin = "*"
 google-cloud-firestore = "*"
 python-multipart = "*"
+polyglot-bitcoin = "*"
 
 [requires]
 python_version = "3.9"

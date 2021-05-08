@@ -5,6 +5,7 @@ from openapi_server.models.request_upload_model import RequestUploadModel  # noq
 from openapi_server.models.request_upload_text_model import RequestUploadTextModel  # noqa: E501
 from openapi_server.models.request_login_model import RequestLoginModel  # noqa: E501
 
+from openapi_server.models.base_api_response_error_model import BaseApiResponseErrorModel, error_response, InvalidFizzBuzzInput
 from openapi_server.models.response_add_address_model import ResponseAddAddressModel  # noqa: E501
 from openapi_server.models.response_gen_key_model import ResponseGenKeyModel  # noqa: E501
 from openapi_server.models.response_get_balance_model import ResponseGetBalanceModel  # noqa: E501
@@ -17,7 +18,7 @@ from openapi_server.models.response_login_model import ResponseLoginModel  # noq
 from openapi_server import util
 
 from controllers._base_controller import app, templates
-from fastapi import FastAPI, Request, Form, UploadFile, File
+from fastapi import FastAPI, Request, Form, UploadFile, File, status
 from fastapi.responses import JSONResponse
 
 from utils.upload_util.bsv_upload_util import BsvUploadUtil
@@ -75,7 +76,15 @@ def api_download(txid):  # noqa: E501
 @app.get(
     "/api/genkey",
     tags=["api"],
-    response_class=JSONResponse)
+    response_class=JSONResponse,
+    responses=error_response([BaseApiResponseErrorModel, InvalidFizzBuzzInput])
+    #     200: {
+    #     "public_key_hex": "0xe5************",
+    #     "secret_key_hex": "0x45************"
+    #     },
+    #     400: {}
+    # },
+    )
 def api_genkey(typeid):  # noqa: E501
     """Generate Ecies Public Key and Secret Key.
 
@@ -93,9 +102,9 @@ def api_genkey(typeid):  # noqa: E501
         secret_key_hex = ec_key.to_hex()
         public_key_hex = ec_key.public_key.to_hex()
 
-        return ResponseGenKeyModel(secret_key_hex, public_key_hex).to_dict()
+        return JSONResponse(status_code=status.HTTP_200_OK, content=ResponseGenKeyModel(secret_key_hex, public_key_hex).to_dict())
     else:
-        return {}, 500
+        raise InvalidFizzBuzzInput() #JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={})
 
 @app.get(
     "/api/get-balance",

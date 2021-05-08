@@ -21,6 +21,7 @@ from fastapi import FastAPI, Request, Form, UploadFile, File
 from fastapi.responses import JSONResponse
 
 from utils.upload_util.bsv_upload_util import BsvUploadUtil
+from utils.crypt_util import CryptUtil
 
 @app.post(
     "/api/add-address",
@@ -85,7 +86,16 @@ def api_genkey(typeid):  # noqa: E501
 
     :rtype: ResponseGenKeyModel
     """
-    return 'do some magic!'
+    #return 'do some magic!'
+    if typeid == 'ecies':
+        cryptUtil = CryptUtil()
+        ec_key = cryptUtil.generateEciesKey()
+        secret_key_hex = ec_key.to_hex()
+        public_key_hex = ec_key.public_key.to_hex()
+
+        return ResponseGenKeyModel(secret_key_hex, public_key_hex).to_dict()
+    else:
+        return {}, 500
 
 @app.get(
     "/api/get-balance",

@@ -12,15 +12,18 @@ uvicorn = "*"
 jinja2 = "*"
 aiofiles = "*"
 sqlalchemy = "*"
-databases = {extras = ["mysql"], version = "*"}
 aiomysql = "*"
 pymysql = "*"
 mysql-connector-python = "*"
-# mysqlclient = "*"
 firebase-admin = "*"
 google-cloud-firestore = "*"
 python-multipart = "*"
 polyglot-bitcoin = "*"
+eciespy = "*"
 
 [requires]
-python_version = "3.9"
+python_version = "3.8"
+
+[packages.databases]
+extras = [ "mysql",]
+version = "*"

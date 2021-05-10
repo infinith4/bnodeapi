@@ -10,7 +10,7 @@ class BaseApiResponseErrorModel(Exception):
     status_code: int = status.HTTP_400_BAD_REQUEST
     detail: str = 'bad request'  # エラー概要
 
-class InvalidFizzBuzzInput(BaseApiResponseErrorModel):
+class InvalidRequestModel(BaseApiResponseErrorModel):
     def __init__(self):
         self.response = JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={})
 

@@ -5,7 +5,7 @@ from openapi_server.models.request_upload_model import RequestUploadModel  # noq
 from openapi_server.models.request_upload_text_model import RequestUploadTextModel  # noqa: E501
 from openapi_server.models.request_login_model import RequestLoginModel  # noqa: E501
 
-from openapi_server.models.base_api_response_error_model import BaseApiResponseErrorModel, error_response, InvalidFizzBuzzInput
+from openapi_server.models.base_api_response_error_model import BaseApiResponseErrorModel, error_response, InvalidRequestModel
 from openapi_server.models.response_add_address_model import ResponseAddAddressModel  # noqa: E501
 from openapi_server.models.response_gen_key_model import ResponseGenKeyModel  # noqa: E501
 from openapi_server.models.response_get_balance_model import ResponseGetBalanceModel  # noqa: E501
@@ -77,7 +77,7 @@ def api_download(txid):  # noqa: E501
     "/api/genkey",
     tags=["api"],
     response_class=JSONResponse,
-    responses=error_response([BaseApiResponseErrorModel, InvalidFizzBuzzInput])
+    responses=error_response([BaseApiResponseErrorModel, InvalidRequestModel])
     #     200: {
     #     "public_key_hex": "0xe5************",
     #     "secret_key_hex": "0x45************"
@@ -104,8 +104,8 @@ def api_genkey(typeid):  # noqa: E501
 
         return JSONResponse(status_code=status.HTTP_200_OK, content=ResponseGenKeyModel(secret_key_hex, public_key_hex).to_dict())
     else:
-        invalidFizzBuzzInput = InvalidFizzBuzzInput()
-        return invalidFizzBuzzInput.response
+        invalid_request = InvalidRequestModel()
+        return invalid_request.response
 
 @app.get(
     "/api/get-balance",

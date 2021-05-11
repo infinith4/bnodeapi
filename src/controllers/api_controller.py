@@ -111,7 +111,8 @@ def api_genkey(typeid):  # noqa: E501
 @app.get(
     "/api/get-balance",
     tags=["api"],
-    response_class=JSONResponse)
+    response_class=JSONResponse,
+    responses=error_response([BaseApiResponseErrorModel, InvalidRequestModel]))
 def api_get_balance(addr):  # noqa: E501
     """get balance from address using woc.
 
@@ -122,7 +123,11 @@ def api_get_balance(addr):  # noqa: E501
 
     :rtype: ResponseGetBalanceModel
     """
-    return BsvBalanceUtil.get_balance(addr)
+    try:
+        return BsvBalanceUtil.get_balance(addr)
+    except Exception as e:
+        invalid_request = InvalidRequestModel()
+        return invalid_request.response
 
 @app.post(
     "/api/login",

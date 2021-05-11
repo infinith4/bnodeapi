@@ -8,10 +8,7 @@ class BsvBalanceUtil():
 
     @staticmethod
     def get_balance(address: str) -> ResponseGetBalanceModel : 
-        try:
-            woc = api.WhatsonchainTestNet()
-            response_get_address = woc.get_balance(address)
-            responseGetBalance = ResponseGetBalanceModel.from_dict(response_get_address)  # noqa: E501
-            return ResponseGetBalanceModel(0, responseGetBalance.confirmed, responseGetBalance.unconfirmed)
-        except Exception as e:
-            return ResponseGetBalanceModel()
+        woc = api.WhatsonchainTestNet()
+        response_get_address = woc.get_balance(address)
+        responseGetBalance = ResponseGetBalanceModel.from_dict(response_get_address)  # noqa: E501
+        return ResponseGetBalanceModel(responseGetBalance.confirmed, responseGetBalance.unconfirmed).to_dict()

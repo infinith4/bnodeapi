@@ -23,6 +23,7 @@ from fastapi.responses import JSONResponse
 
 from utils.upload_util.bsv_upload_util import BsvUploadUtil
 from utils.crypt_util import CryptUtil
+from utils.bsv_balance_util import BsvBalanceUtil
 
 @app.post(
     "/api/add-address",
@@ -121,7 +122,7 @@ def api_get_balance(addr):  # noqa: E501
 
     :rtype: ResponseGetBalanceModel
     """
-    return 'do some magic!'
+    return BsvBalanceUtil.get_balance(addr)
 
 @app.post(
     "/api/login",

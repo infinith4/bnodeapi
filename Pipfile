@@ -20,6 +20,8 @@ google-cloud-firestore = "*"
 python-multipart = "*"
 polyglot-bitcoin = "*"
 eciespy = "*"
+mnemonic = "*"
+pycoin = "*"
 
 [requires]
 python_version = "3.8"

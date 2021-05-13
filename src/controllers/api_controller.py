@@ -24,6 +24,7 @@ from fastapi.responses import JSONResponse
 from utils.upload_util.bsv_upload_util import BsvUploadUtil
 from utils.crypt_util import CryptUtil
 from utils.bsv_balance_util import BsvBalanceUtil
+from utils.bsv_mnemonic_util import BsvMnemonicUtil
 
 @app.post(
     "/api/add-address",
@@ -152,7 +153,7 @@ def api_login(loginUser: RequestLoginModel):  # noqa: E501
     "/api/mnemonic",
     tags=["api"],
     response_class=JSONResponse)
-def api_mnemonic(body):  # noqa: E501
+def api_mnemonic(mnemonic: str):  # noqa: E501
     """convert mnemonic words to wif, asset on Bitcoin SV.
 
     convert mnemonic words to wif, asset on Bitcoin SV. # noqa: E501
@@ -164,7 +165,15 @@ def api_mnemonic(body):  # noqa: E501
     """
     # if connexion.request.is_json:
     #     body = RequestMnemonicModel.from_dict(connexion.request.get_json())  # noqa: E501
-    return 'do some magic!'
+    # return 'do some magic!'
+    try:
+        #app.app.logger.info("start /api/mnemonic")
+        # if connexion.request.is_json:
+        #     body = RequestMnemonicModel.from_dict(connexion.request.get_json())  # noqa: E501
+        return BsvMnemonicUtil.get_mnemonic(mnemonic)
+    except Exception as e:
+        print(e)
+        return {}, 500
 
 @app.get(
     "/api/tx",

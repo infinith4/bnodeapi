@@ -24,6 +24,7 @@ from fastapi.responses import JSONResponse
 from utils.upload_util.bsv_upload_util import BsvUploadUtil
 from utils.crypt_util import CryptUtil
 from utils.bsv_balance_util import BsvBalanceUtil
+from utils.bsv_tx_util import BsvTxUtil
 from utils.bsv_mnemonic_util import BsvMnemonicUtil
 
 @app.post(
@@ -154,6 +155,7 @@ def api_login(loginUser: RequestLoginModel):  # noqa: E501
     tags=["api"],
     response_class=JSONResponse,
     responses=error_response([BaseApiResponseErrorModel, InvalidRequestModel])
+    )
 def api_mnemonic(mnemonic: str):  # noqa: E501
     """convert mnemonic words to wif, asset on Bitcoin SV.
 
@@ -195,6 +197,7 @@ def api_tx(addr, start_index=None, count=None):  # noqa: E501
 
     :rtype: List[ResponseTxModel]
     """
+    txt_on_chain = BsvTxUtil.get_txt_on_chain()
     return 'do some magic!'
 
 @app.post("/files/")

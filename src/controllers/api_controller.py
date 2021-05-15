@@ -152,7 +152,8 @@ def api_login(loginUser: RequestLoginModel):  # noqa: E501
 @app.get(
     "/api/mnemonic",
     tags=["api"],
-    response_class=JSONResponse)
+    response_class=JSONResponse,
+    responses=error_response([BaseApiResponseErrorModel, InvalidRequestModel])
 def api_mnemonic(mnemonic: str):  # noqa: E501
     """convert mnemonic words to wif, asset on Bitcoin SV.
 
@@ -173,7 +174,8 @@ def api_mnemonic(mnemonic: str):  # noqa: E501
         return BsvMnemonicUtil.get_mnemonic(mnemonic)
     except Exception as e:
         print(e)
-        return {}, 500
+        invalid_request = InvalidRequestModel()
+        return invalid_request.response
 
 @app.get(
     "/api/tx",

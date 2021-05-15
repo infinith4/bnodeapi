@@ -22,12 +22,10 @@ class Bip39MnemonicUtil(object):
 
         print(network)
         key = BTC.keys.bip32_seed(seed)
-        address = key.address()
-        wif = key.wif()
-        
+        #address = key.address()
         #self.extended_key = self.to_hd_master_key(seed, network_name == 'test')
         #print(self.extended_key)
-        self.privatekey_wif = wif
+        self.privatekey_wif = key.wif()
         # master = XTN.keys.bip32_seed(h2b("000102030405060708090a0b0c0d0e0f"))
         # wif = master.hwif(as_private=True)
         # self.node = network.parse.secret(self.extended_key)

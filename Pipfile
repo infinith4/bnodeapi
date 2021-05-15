@@ -24,8 +24,4 @@ mnemonic = "*"
 pycoin = "*"
 
 [requires]
-python_version = "3.8"
-
-[packages.databases]
-extras = [ "mysql",]
-version = "*"
+python_version = "3.9"

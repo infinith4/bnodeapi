@@ -11,7 +11,7 @@ class BsvMnemonicUtil():
     
     @staticmethod
     def get_mnemonic(mnemonic) -> ResponseMnemonicModel :
-        bip39MnemonicUtil = Bip39MnemonicUtil(mnemonic, passphrase="", network="test")
+        bip39MnemonicUtil = Bip39MnemonicUtil(mnemonic, passphrase="", network_name="test")
         privateKey = bitsv.Key(bip39MnemonicUtil.privatekey_wif, network = 'test')
         address = privateKey.address
         balance_satoshi = privateKey.get_balance()

@@ -197,7 +197,7 @@ def api_tx(addr, start_index=None, count=None):  # noqa: E501
 
     :rtype: List[ResponseTxModel]
     """
-    txt_on_chain = BsvTxUtil.get_txt_on_chain()
+    txt_on_chain = BsvTxUtil.get_txt_on_chain(addr)
     return 'do some magic!'
 
 @app.post("/files/")

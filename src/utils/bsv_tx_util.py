@@ -6,7 +6,7 @@ class BsvTxUtil():
         pass
 
     @staticmethod
-    def get_txt_on_chain(address: str):
+    def get_tx(address: str) -> list:
         res_get_textdata = []
         #print(trans_list)
         #trans_list = ["a6801f8ac9266c077a73b1ec3a24a2f718169b8f44189b25065022cee9c65634","47bdd81af95197b1f6e3d85626d0e6a24e77a596d8b13cfefd8cb971bd7c2db7"]
@@ -14,13 +14,14 @@ class BsvTxUtil():
         whatsOnChainLib = WhatsOnChainLib(network)
         trans_list = whatsOnChainLib.get_history(address)
         
-        if len(trans_list) > 0:
-            print(trans_list)
-            p = multiprocessing.Pool(6) # プロセス数を6に設定
-            result = p.map(whatsOnChainLib.get_textdata, trans_list)  ## arg must be array
+        return trans_list
+        # if len(trans_list) > 0:
+        #     print(trans_list)
+        #     p = multiprocessing.Pool(6) # プロセス数を6に設定
+        #     result = p.map(whatsOnChainLib.get_textdata, trans_list)  ## arg must be array
 
-            for item in result:
-                if item is not None and item.mimetype == "text/plain":
-                    res_get_textdata.append(item.data)
-        print(res_get_textdata)
-        return { 'textdata_list': res_get_textdata }
+        #     for item in result:
+        #         if item is not None and item.mimetype == "text/plain":
+        #             res_get_textdata.append(item.data)
+        # print(res_get_textdata)
+        # return { 'textdata_list': res_get_textdata }

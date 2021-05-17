@@ -1,5 +1,5 @@
 import multiprocessing
-from lib.whats_on_chain_lib import WhatsOnChainLib
+#from lib.whats_on_chain_lib import WhatsOnChainLib
 
 class BsvTxUtil():
     def __init__(self):
@@ -11,9 +11,9 @@ class BsvTxUtil():
         #print(trans_list)
         #trans_list = ["a6801f8ac9266c077a73b1ec3a24a2f718169b8f44189b25065022cee9c65634","47bdd81af95197b1f6e3d85626d0e6a24e77a596d8b13cfefd8cb971bd7c2db7"]
         network = "test"
-        whatsOnChainLib = WhatsOnChainLib(network)
-        trans_list = whatsOnChainLib.get_history(address)
-        
+        #whatsOnChainLib = WhatsOnChainLib(network)
+        #trans_list = whatsOnChainLib.get_history(address)
+        trans_list = []
         return trans_list
         # if len(trans_list) > 0:
         #     print(trans_list)

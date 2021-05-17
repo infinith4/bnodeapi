@@ -19,13 +19,14 @@ from openapi_server import util
 
 from controllers._base_controller import app, templates
 from fastapi import FastAPI, Request, Form, UploadFile, File, status
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 
 from utils.upload_util.bsv_upload_util import BsvUploadUtil
 from utils.crypt_util import CryptUtil
 from utils.bsv_balance_util import BsvBalanceUtil
 from utils.bsv_tx_util import BsvTxUtil
 from utils.bsv_mnemonic_util import BsvMnemonicUtil
+from utils.bsv_download_util import BsvDownloaUtil
 
 @app.post(
     "/api/add-address",
@@ -48,8 +49,8 @@ async def api_addaddress(request: Request):  # noqa: E501
 @app.get(
     "/api/download",
     tags=["api"],
-    response_class=JSONResponse)
-def api_download(txid):  # noqa: E501
+    response_class=StreamingResponse)
+def api_download(txid: str):  # noqa: E501
     """get data for transaction id on Bitcoin SV.
 
     get data for transaction id on Bitcoin SV. # noqa: E501
@@ -59,7 +60,8 @@ def api_download(txid):  # noqa: E501
 
     :rtype: file
     """
-    return 'do some magic!'
+    download = BsvDownloaUtil.download(txid, network_name="test")
+    return download
 
 
 # def api_download_from_cloud(body=None):  # noqa: E501

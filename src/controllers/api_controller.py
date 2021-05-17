@@ -72,9 +72,12 @@ def api_download(txid):  # noqa: E501
     # response.headers["Content-Disposition"] = "attachment; filename=2020-08-14_12-22-25_551_60.jpg" #+ response_download.filename
     # #return FileResponse("IMG_6855.jpeg", media_type="image/jpeg")
     # return response
+    #image : 47bdd81af95197b1f6e3d85626d0e6a24e77a596d8b13cfefd8cb971bd7c2db7
+    #txt : cc80675a9a64db116c004b79d22756d824b16d485990a7dfdf46d4a183b752b2
     response_download : ResponseDownload = BsvDownloaUtil.download(txid, network_name="test")
     data_bytes = response_download.data
-    if(type(response_download.data) == "str"):
+    print(type(response_download.data))
+    if(type(response_download.data) == str):
         data_bytes = bytes(response_download.data, response_download.charset)
     data_stream = io.BytesIO(data_bytes)
     response = StreamingResponse(data_stream, media_type="application/octet-stream")

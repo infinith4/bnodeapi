@@ -73,7 +73,9 @@ def api_download(txid):  # noqa: E501
     # #return FileResponse("IMG_6855.jpeg", media_type="image/jpeg")
     # return response
     response_download : ResponseDownload = BsvDownloaUtil.download(txid, network_name="test")
-    data_bytes = bytes(response_download.data, 'utf-8')
+    data_bytes = response_download.data
+    if(type(response_download.data) == "str"):
+        data_bytes = bytes(response_download.data, response_download.charset)
     data_stream = io.BytesIO(data_bytes)
     response = StreamingResponse(data_stream, media_type="application/octet-stream")
     response.status_code = 200

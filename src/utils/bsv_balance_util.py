@@ -10,5 +10,5 @@ class BsvBalanceUtil():
     def get_balance(address: str) -> ResponseGetBalanceModel : 
         woc = api.WhatsonchainTestNet()
         response_get_address = woc.get_balance(address)
-        responseGetBalance = ResponseGetBalanceModel.from_dict(response_get_address)  # noqa: E501
-        return ResponseGetBalanceModel(responseGetBalance.confirmed, responseGetBalance.unconfirmed).to_dict()
+        response_get_balance = ResponseGetBalanceModel.from_dict(response_get_address)  # noqa: E501
+        return ResponseGetBalanceModel(response_get_balance.confirmed, response_get_balance.unconfirmed).to_dict()

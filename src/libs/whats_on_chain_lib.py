@@ -7,7 +7,7 @@ class WhatsOnChainLib(object):
     def __init__(self, network: str = ''):
         self.base_url = f"https://api.whatsonchain.com/v1/bsv/{network}"
 
-    def get_history(self, address: str, network_name: str = "test") -> list:
+    def get_history(self, address: str) -> list:
         url : str = f"{self.base_url}/address/{address}/history"
         headers : dict = {"content-type": "application/json"}
         r = requests.get(url, headers=headers)

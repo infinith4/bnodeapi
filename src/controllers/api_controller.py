@@ -1,3 +1,5 @@
+import io
+
 from openapi_server.models.request_add_address_model import RequestAddAddressModel  # noqa: E501
 from openapi_server.models.request_download_from_cloud_model import RequestDownloadFromCloudModel  # noqa: E501
 from openapi_server.models.request_mnemonic_model import RequestMnemonicModel  # noqa: E501
@@ -64,10 +66,18 @@ def api_download(txid):  # noqa: E501
     #response_download : ResponseDownload = BsvDownloaUtil.download(txid, network_name="test")
     #response = StreamingResponse(response_download.data, media_type="application/octet-stream")
     #with open("IMG_6855.jpeg") as file:
-    file_like = open("test_image/2020-08-14_12-22-25_551_60.jpg", mode="rb")
-    response = StreamingResponse(file_like, media_type="image/jpeg")
+    #file_like = open("test_image/2020-08-14_12-22-25_551_60.jpg", mode="rb")
+    # response = StreamingResponse(file_like, media_type="image/jpeg")
+    # response.status_code = 200
+    # response.headers["Content-Disposition"] = "attachment; filename=2020-08-14_12-22-25_551_60.jpg" #+ response_download.filename
+    # #return FileResponse("IMG_6855.jpeg", media_type="image/jpeg")
+    # return response
+    response_download : ResponseDownload = BsvDownloaUtil.download(txid, network_name="test")
+    data_bytes = bytes(response_download.data, 'utf-8')
+    data_stream = io.BytesIO(data_bytes)
+    response = StreamingResponse(data_stream, media_type="application/octet-stream")
     response.status_code = 200
-    response.headers["Content-Disposition"] = "attachment; filename=2020-08-14_12-22-25_551_60.jpg" #+ response_download.filename
+    response.headers["Content-Disposition"] = "attachment; filename=" + response_download.filename
     #return FileResponse("IMG_6855.jpeg", media_type="image/jpeg")
     return response
 

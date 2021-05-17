@@ -19,7 +19,7 @@ from openapi_server import util
 
 from controllers._base_controller import app, templates
 from fastapi import FastAPI, Request, Form, UploadFile, File, status
-from fastapi.responses import JSONResponse, StreamingResponse
+from fastapi.responses import JSONResponse, StreamingResponse, FileResponse
 
 from utils.upload_util.bsv_upload_util import BsvUploadUtil
 from utils.crypt_util import CryptUtil
@@ -27,6 +27,7 @@ from utils.bsv_balance_util import BsvBalanceUtil
 from utils.bsv_tx_util import BsvTxUtil
 from utils.bsv_mnemonic_util import BsvMnemonicUtil
 from utils.bsv_download_util import BsvDownloaUtil
+from libs.models.response_download import ResponseDownload
 
 @app.post(
     "/api/add-address",
@@ -48,9 +49,8 @@ async def api_addaddress(request: Request):  # noqa: E501
 
 @app.get(
     "/api/download",
-    tags=["api"],
-    response_class=StreamingResponse)
-def api_download(txid: str):  # noqa: E501
+    tags=["api"])
+def api_download(txid):  # noqa: E501
     """get data for transaction id on Bitcoin SV.
 
     get data for transaction id on Bitcoin SV. # noqa: E501
@@ -60,8 +60,16 @@ def api_download(txid: str):  # noqa: E501
 
     :rtype: file
     """
-    download = BsvDownloaUtil.download(txid, network_name="test")
-    return download
+    #https://github.com/debjava/python-fastapi-restful-swagger-subapi/blob/c6fd318e9e4a3a9818d436c4c3bbe501a56869f4/app/resources/FileDownloadAPI.py#L68
+    #response_download : ResponseDownload = BsvDownloaUtil.download(txid, network_name="test")
+    #response = StreamingResponse(response_download.data, media_type="application/octet-stream")
+    #with open("IMG_6855.jpeg") as file:
+    file_like = open("test_image/2020-08-14_12-22-25_551_60.jpg", mode="rb")
+    response = StreamingResponse(file_like, media_type="image/jpeg")
+    response.status_code = 200
+    response.headers["Content-Disposition"] = "attachment; filename=2020-08-14_12-22-25_551_60.jpg" #+ response_download.filename
+    #return FileResponse("IMG_6855.jpeg", media_type="image/jpeg")
+    return response
 
 
 # def api_download_from_cloud(body=None):  # noqa: E501

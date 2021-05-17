@@ -1,6 +1,7 @@
 import requests
 import binascii
 from fastapi.responses import StreamingResponse
+from libs.models.response_download import ResponseDownload
 
 class BsvDownloaUtil():
     def __init__(self):
@@ -39,4 +40,4 @@ class BsvDownloaUtil():
         # response.headers["Content-Disposition"] = header_ContentDisposition
         # response.mimetype = mimetype
         headers : dict = {"Content-Disposition": header_ContentDisposition}
-        return StreamingResponse(data, 200, headers, mimetype)
+        return ResponseDownload(txid, data, mimetype, upload_charset, downloadFilename)

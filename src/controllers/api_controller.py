@@ -28,7 +28,7 @@ from utils.crypt_util import CryptUtil
 from utils.bsv_balance_util import BsvBalanceUtil
 from utils.bsv_tx_util import BsvTxUtil
 from utils.bsv_mnemonic_util import BsvMnemonicUtil
-from utils.bsv_download_util import BsvDownloaUtil
+from utils.bsv_download_util import BsvDownloadUtil
 from libs.models.response_download import ResponseDownload
 
 @app.post(
@@ -74,7 +74,7 @@ def api_download(txid):  # noqa: E501
     # return response
     #image : 47bdd81af95197b1f6e3d85626d0e6a24e77a596d8b13cfefd8cb971bd7c2db7
     #txt : cc80675a9a64db116c004b79d22756d824b16d485990a7dfdf46d4a183b752b2
-    response_download : ResponseDownload = BsvDownloaUtil.download(txid, network_name="test")
+    response_download : ResponseDownload = BsvDownloadUtil.download(txid, network_name="test")
     data_bytes = response_download.data
     print(type(response_download.data))
     if(type(response_download.data) == str):

@@ -3,7 +3,7 @@ import binascii
 from fastapi.responses import StreamingResponse
 from libs.models.response_download import ResponseDownload
 
-class BsvDownloaUtil():
+class BsvDownloadUtil():
     def __init__(self):
         pass
 

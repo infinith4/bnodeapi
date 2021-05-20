@@ -1,6 +1,6 @@
 
 import requests
-from lib.models.response_tx import ResponseTx
+from libs.models.response_tx import ResponseTx
 import binascii
 
 class WhatsOnChainLib(object):

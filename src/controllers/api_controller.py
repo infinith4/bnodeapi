@@ -237,8 +237,8 @@ async def create_file(file: bytes = File(...)):
 async def create_upload_file(upload_file: UploadFile = File(...)):
     private_key_wif = ""
     uploader = BsvUploadUtil(private_key_wif)
-    contents = await upload_file.read()
-    uploader.upload("", media_type="image/jpeg", encoding="binary", file_name=upload_file.filename)
+    contents : bytes = await upload_file.read()
+    uploader.upload(contents, media_type="image/jpeg", encoding="binary", file_name=upload_file.filename)
     return {"file": upload_file}
 
 @app.post(

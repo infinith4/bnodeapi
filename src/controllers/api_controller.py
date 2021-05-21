@@ -235,7 +235,7 @@ async def create_file(file: bytes = File(...)):
     tags=["api"],
     response_class=JSONResponse)
 async def create_upload_file(upload_file: UploadFile = File(...)):
-    private_key_wif = ""
+    private_key_wif = "cTqvJoYPXAKUuNWre4B53LDSUQNRq8P6vcRHtrTEnrSSNhUynysF"
     uploader = BsvUploadUtil(private_key_wif)
     contents : bytes = await upload_file.read()
     uploader.upload(contents, media_type="image/jpeg", encoding="binary", file_name=upload_file.filename)

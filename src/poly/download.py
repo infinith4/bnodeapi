@@ -1,22 +1,10 @@
-import polyglot
-import bitsv
-
-from polyglot.upload import Upload
-
-
 import gzip
 
 from bitsv.network import NetworkAPI
 
+from poly.bitcom import B, C, BCAT, BCATPART, D, AIP, MAP
+
 class Download(NetworkAPI):
-    @staticmethod
-    def do_download(txid : str) -> dict:
-        dl = Download("test")
-        #data_dict : dict = dl.bcat_fields_from_txid(txid)
-        data_dict = dl.download_bcat(txid, "test")
-        return data_dict
-
-
     def __init__(self, network='main'):
         super().__init__(network=network)
 
@@ -259,8 +247,3 @@ class Download(NetworkAPI):
                     data = gzip.decompress(data)
                 f.write(data)
         return fields
-
-txid: str = "39ac6259c8d0e115192979ea6ec32172d711059e72c7464287292a371559e899"
-txid: str = "0ae5b5fd7c064644b05d1762f5ca8aadb1cb4ba03eda0bbb248f91648387c8bc"
-data = Download.do_download(txid)
-print(data)

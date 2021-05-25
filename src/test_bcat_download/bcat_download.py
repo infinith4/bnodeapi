@@ -1,8 +1,9 @@
 import polyglot
 import bitsv
+from io import BytesIO
 
 from polyglot.upload import Upload
-
+from PIL import Image
 
 import gzip
 
@@ -46,6 +47,20 @@ class Download(NetworkAPI):
         except Exception as e:
             pass
         return data_dict
+
+    def do_download_txids(txids):
+        dl = Download("test")
+        data = dl.bcat_binary_from_txids(txids)
+        img = Image.open(BytesIO(data))
+        img.save("write_jpg1.jpg")
+        # fw = open("write_jpg.jpg", "wb")
+
+        # while True:
+        #     if(len(data) == 0):
+        #         break
+
+        #     fw.write(data)
+        # fw.close()
 
 
     def __init__(self, network='main'):
@@ -291,12 +306,12 @@ class Download(NetworkAPI):
                 f.write(data)
         return fields
 
-txid: str = "39ac6259c8d0e115192979ea6ec32172d711059e72c7464287292a371559e899"
-data = Download.do_download(txid)
+txid0: str = "39ac6259c8d0e115192979ea6ec32172d711059e72c7464287292a371559e899"
+data = Download.do_download(txid0)
 print(data)
 
-txid: str = "0ae5b5fd7c064644b05d1762f5ca8aadb1cb4ba03eda0bbb248f91648387c8bc"
-data = Download.do_download(txid)
+txid1: str = "0ae5b5fd7c064644b05d1762f5ca8aadb1cb4ba03eda0bbb248f91648387c8bc"
+data = Download.do_download(txid1)
 print(data)
 
 # txid : 39ac6259c8d0e115192979ea6ec32172d711059e72c7464287292a371559e899
@@ -313,3 +328,5 @@ print(data)
 # subfields : {}
 # fields : {}
 # {}
+
+Download.do_download_txids([txid0, txid1])

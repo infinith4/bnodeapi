@@ -19,19 +19,32 @@ MAP = '1PuQa7K62MiKCtssSLKy1kh56WWU7MtUR5'  # MAP protocol.
 class Download(NetworkAPI):
     @staticmethod
     def do_download(txid : str) -> dict:
+        print(f"txid : {txid}")
         dl = Download("test")
         #data_dict : dict = dl.bcat_fields_from_txid(txid)
         scripts = dl.scripts_from_txid(txid)
         #print(scripts)
         data = dl.pushdata_from_script(scripts[0])
-        print(data)
-        fields = dl.bcat_linker_fields_from_pushdata(data)
-        print(fields)
+        #print(data)
+        decodezero = data[0].decode('utf-8')
+        print(f"decodezero : {decodezero}")
+        decodeone = data[1].decode('utf-8')
+        print(f"decodeone : {decodeone}")
+        detectfields = dl.bcat_linker_detect_from_pushdata(data)
+        print(f"detectfields : {detectfields}")
+        subfields = dl.bcat_linker_fields_from_pushdata(data)
+        print(f"subfields : {subfields}")
         part_binary = dl.bcat_part_binary_from_pushdata(data)
-        print(part_binary)
+        #print(f"part_binary : {part_binary}")
+        
         fields = dl.bcat_linker_fields_from_txid(txid)
-        print(fields)
-        data_dict = dl.download_bcat(txid, "test")
+        print(f"fields : {fields}")
+        
+        data_dict = {}
+        try:
+            data_dict = dl.download_bcat(txid, "test")
+        except Exception as e:
+            pass
         return data_dict
 
 
@@ -279,6 +292,24 @@ class Download(NetworkAPI):
         return fields
 
 txid: str = "39ac6259c8d0e115192979ea6ec32172d711059e72c7464287292a371559e899"
+data = Download.do_download(txid)
+print(data)
+
 txid: str = "0ae5b5fd7c064644b05d1762f5ca8aadb1cb4ba03eda0bbb248f91648387c8bc"
 data = Download.do_download(txid)
 print(data)
+
+# txid : 39ac6259c8d0e115192979ea6ec32172d711059e72c7464287292a371559e899
+# decodezero : 
+# decodeone : 1ChDHzdd1H4wSjgGMHyndZm6qxEDGjqpJL
+# detectfields : False
+# subfields : {}
+# fields : {}
+# {}
+# txid : 0ae5b5fd7c064644b05d1762f5ca8aadb1cb4ba03eda0bbb248f91648387c8bc
+# decodezero : 
+# decodeone : 1ChDHzdd1H4wSjgGMHyndZm6qxEDGjqpJL
+# detectfields : False
+# subfields : {}
+# fields : {}
+# {}

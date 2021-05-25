@@ -329,4 +329,4 @@ print(data)
 # fields : {}
 # {}
 
-Download.do_download_txids([txid0, txid1])
+Download.do_download_txids(['cf9dd6c9def26fe88d7936b626e26aa003d221578d17a47b9c091f1dcbabaa10', '14398e32c83c13580d921c1abcec5e2a5cb8f60eabc7e141091c35ac8db245d1'])

@@ -43,7 +43,7 @@ class Download(NetworkAPI):
         
         data_dict = {}
         try:
-            data_dict = dl.download_bcat(txid, "test")
+            data_dict = dl.download_bcat(txid, "test", False)
         except Exception as e:
             pass
         return data_dict
@@ -306,13 +306,13 @@ class Download(NetworkAPI):
                 f.write(data)
         return fields
 
-txid0: str = "39ac6259c8d0e115192979ea6ec32172d711059e72c7464287292a371559e899"
-data = Download.do_download(txid0)
-print(data)
+# txid0: str = "39ac6259c8d0e115192979ea6ec32172d711059e72c7464287292a371559e899"
+# data = Download.do_download(txid0)
+# print(data)
 
-txid1: str = "0ae5b5fd7c064644b05d1762f5ca8aadb1cb4ba03eda0bbb248f91648387c8bc"
-data = Download.do_download(txid1)
-print(data)
+# txid1: str = "0ae5b5fd7c064644b05d1762f5ca8aadb1cb4ba03eda0bbb248f91648387c8bc"
+# data = Download.do_download(txid1)
+# print(data)
 
 # txid : 39ac6259c8d0e115192979ea6ec32172d711059e72c7464287292a371559e899
 # decodezero : 
@@ -330,3 +330,8 @@ print(data)
 # {}
 
 Download.do_download_txids(['cf9dd6c9def26fe88d7936b626e26aa003d221578d17a47b9c091f1dcbabaa10', '14398e32c83c13580d921c1abcec5e2a5cb8f60eabc7e141091c35ac8db245d1'])
+
+
+txid2: str = "613886b7e390c2c04d3c4a271fb685225daae9eabcce391a44bca3fd949868f3"
+data = Download.do_download(txid2)
+print(data)

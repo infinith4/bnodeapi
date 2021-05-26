@@ -26,6 +26,10 @@ wif = "cTqvJoYPXAKUuNWre4B53LDSUQNRq8P6vcRHtrTEnrSSNhUynysF"
 
 uploader = BsvUploadUtil(wif)
 file_path : str = "IMG_6855mini.jpg"
+
+result_upload_easy = uploader.uploader.upload_easy(file_path)
+print(result_upload_easy)
+
 file_data = open(file_path, "rb")
 contents : bytes = file_data.read()
 txid = uploader.upload(contents, media_type="image/jpeg", encoding="binary", file_name=file_path)

@@ -331,7 +331,11 @@ class Download(NetworkAPI):
 
 Download.do_download_txids(['cf9dd6c9def26fe88d7936b626e26aa003d221578d17a47b9c091f1dcbabaa10', '14398e32c83c13580d921c1abcec5e2a5cb8f60eabc7e141091c35ac8db245d1'])
 
+# https://test.whatsonchain.com/tx/613886b7e390c2c04d3c4a271fb685225daae9eabcce391a44bca3fd949868f3
 
 txid2: str = "613886b7e390c2c04d3c4a271fb685225daae9eabcce391a44bca3fd949868f3"
 data = Download.do_download(txid2)
 print(data)
+
+#Download.do_download_txids(['a6388e4020dca0d5fbe858d685f521e7e4db776e7a9ca94f666dac7bb7cc0756', 'e0689600d433056f9b5884e487a54d5d6c8674209c42ae96fe5e0a08d8a2f35e'])
+

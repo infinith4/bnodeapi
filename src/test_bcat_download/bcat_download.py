@@ -17,6 +17,8 @@ D = '19iG3WTYSsbyos3uJ733yK4zEioi1FesNU'  # Dynamic - ownership over state of ad
 AIP = '15PciHG22SNLQJXMoSUaWVi7WSqc7hCfva'  # https://github.com/BitcoinFiles/AUTHOR_IDENTITY_PROTOCOL
 MAP = '1PuQa7K62MiKCtssSLKy1kh56WWU7MtUR5'  # MAP protocol.
 
+import datetime
+
 class Download(NetworkAPI):
     @staticmethod
     def do_download(txid : str) -> dict:
@@ -37,14 +39,45 @@ class Download(NetworkAPI):
         print(f"subfields : {subfields}")
         part_binary = dl.bcat_part_binary_from_pushdata(data)
         #print(f"part_binary : {part_binary}")
-        
-        fields = dl.bcat_linker_fields_from_txid(txid)
-        print(f"fields : {fields}")
+        print("bcat_linker_fields_from_txid")
+        #fields = dl.bcat_linker_fields_from_txid(txid)
+        #print(f"fields : {fields}")
         
         data_dict = {}
         try:
-            data_dict = dl.download_bcat(txid, "test", False)
+            datetime_now = datetime.datetime.now()
+            datetime_now_str = datetime_now.strftime("%Y%m%d%H%M%S%f")
+            #filename = f"test{datetime_now_str}.jpg"
+            filename = f"test.jpg"
+            fields = dl.bcat_linker_fields_from_txid(txid)
+            print(f"----fields : {fields}")
+            if(fields == None):
+                print(f"fields : None")
+                #pass
+            transferred = 0
+            with open(filename, 'ab') as file:
+                print(f"fields['parts'] : {fields['parts']}")
+                for txid in fields['parts']:
+                    print(f"txid : {txid}")
+                    data = dl.bcat_part_binary_from_txid(txid)
+                    transferred += len(data)
+                    file.write(data)
+            # with open(filename, 'ab') as file:
+            #     print(f"fields['parts'] : {fields['parts']}")
+            #     for txid in fields['parts']:
+            #         print(f"txid : {txid}")
+            #         data = dl.bcat_part_binary_from_txid(txid)
+            #         transferred += len(data)
+            #         file.write(data)
+            # for txid in fields['parts']:
+            #     print(f"txid : {txid}")
+            #     data = dl.bcat_part_binary_from_txid(txid)
+            #     transferred += len(data)
+            #     img = Image.open(BytesIO(data))
+            #     img.save("write_jpg1.jpg")
+            # data_dict = dl.download_bcat(txid, , False)
         except Exception as e:
+            print(e)
             pass
         return data_dict
 
@@ -329,7 +362,7 @@ class Download(NetworkAPI):
 # fields : {}
 # {}
 
-Download.do_download_txids(['cf9dd6c9def26fe88d7936b626e26aa003d221578d17a47b9c091f1dcbabaa10', '14398e32c83c13580d921c1abcec5e2a5cb8f60eabc7e141091c35ac8db245d1'])
+#Download.do_download_txids(['cf9dd6c9def26fe88d7936b626e26aa003d221578d17a47b9c091f1dcbabaa10', '14398e32c83c13580d921c1abcec5e2a5cb8f60eabc7e141091c35ac8db245d1'])
 
 # https://test.whatsonchain.com/tx/613886b7e390c2c04d3c4a271fb685225daae9eabcce391a44bca3fd949868f3
 
